@@ -67,6 +67,7 @@ lib/
   │       └── audio_player/
   │           ├── audio_player_bloc.dart
   │           └── audio_player_event.dart
+  │           └── audio_player_state.dart
   └── main.dart
 ```
 
