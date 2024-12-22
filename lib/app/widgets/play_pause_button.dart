@@ -5,25 +5,25 @@ class PlayPauseButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const PlayPauseButton({
-    Key? key,
+    super.key,
     required this.isPlaying,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 64,
       height: 64,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white,
+        color: const Color(0xFFEDEDED).withOpacity(0.5),
       ),
       child: IconButton(
         icon: Icon(
           isPlaying ? Icons.pause : Icons.play_arrow,
           size: 32,
-          color: Colors.black,
+          color: const Color(0xFF525353),
         ),
         onPressed: onPressed,
       ),

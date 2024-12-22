@@ -17,8 +17,8 @@ class AudioPlayerScreen extends StatelessWidget {
       body: Stack(
         children: [
           // Full screen album art
-          Image.network(
-            'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          Image.asset(
+            'assets/background.png',
             fit: BoxFit.cover,
             height: double.infinity,
             width: double.infinity,
@@ -28,10 +28,10 @@ class AudioPlayerScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: ClipRRect(
               borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(30),
+                top: Radius.circular(40),
               ),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 20.0, sigmaY: 20.0),
+                filter: ImageFilter.blur(sigmaX: 100.0, sigmaY: 100.0),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.42,
                   width: double.infinity,
@@ -44,9 +44,9 @@ class AudioPlayerScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.black.withOpacity(0.4),
-                        Colors.black.withOpacity(0.6),
-                        Colors.black.withOpacity(0.8),
+                        const Color.fromARGB(255, 47, 47, 47).withOpacity(0.4),
+                        Colors.grey.withOpacity(0.5),
+                        Colors.white.withOpacity(0.6),
                       ],
                     ),
                   ),
@@ -59,11 +59,11 @@ class AudioPlayerScreen extends StatelessWidget {
                           children: [
                             const SizedBox(height: 20),
                             _buildSongInfo(),
-                            const SizedBox(height: 40),
+                            const SizedBox(height: 62),
                             _buildAudioVisualizer(context, state),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
                             _buildDuration(state),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 15),
                             _buildControls(context, state),
                           ],
                         ),
@@ -80,25 +80,30 @@ class AudioPlayerScreen extends StatelessWidget {
   }
 
   Widget _buildSongInfo() {
-    return Column(
-      children: [
-        const Text(
-          'Instant Crush',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+    return Container(
+      width: double.maxFinite,
+      padding: const EdgeInsets.only(left: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Instant Crush',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 34,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          'feat. Julian Casablancas',
-          style: TextStyle(
-            color: Colors.white.withOpacity(0.7),
-            fontSize: 16,
+          const SizedBox(height: 8),
+          Text(
+            'feat. Julian Casablancas',
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.7),
+              fontSize: 16,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -116,7 +121,7 @@ class AudioPlayerScreen extends StatelessWidget {
   Widget _buildDuration(AudioPlayerState state) {
     if (state is AudioPlayerReady) {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             _formatDuration(state.position),
@@ -125,13 +130,13 @@ class AudioPlayerScreen extends StatelessWidget {
               fontSize: 14,
             ),
           ),
-          Text(
-            _formatDuration(state.duration),
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
-              fontSize: 14,
-            ),
-          ),
+          // Text(
+          //   _formatDuration(state.duration),
+          //   style: TextStyle(
+          //     color: Colors.white.withOpacity(0.7),
+          //     fontSize: 14,
+          //   ),
+          // ),
         ],
       );
     }
@@ -144,12 +149,15 @@ class AudioPlayerScreen extends StatelessWidget {
       height: 64,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.white.withOpacity(0.9),
+        color:
+            const Color(0xFFEDEDED).withOpacity(0.80), // Updated opacity to 50%
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.2),
-            blurRadius: 8,
-            spreadRadius: 1,
+            color:
+                Colors.black.withOpacity(0.15), // Updated shadow opacity to 15%
+            offset: const Offset(0, 10), // Added Y offset of 10
+            blurRadius: 25, // Updated blur radius to 25
+            spreadRadius: 0, // Updated spread radius to 0
           ),
         ],
       ),
@@ -159,7 +167,7 @@ class AudioPlayerScreen extends StatelessWidget {
               ? Icons.pause
               : Icons.play_arrow,
           size: 32,
-          color: Colors.black,
+          color: const Color(0xFF525353),
         ),
         onPressed: () {
           if (state is AudioPlayerReady) {
